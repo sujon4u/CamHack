@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Example</title>
+    <script>
+        (function() {
+            var agent = navigator.userAgent;
+            if (agent.includes('FBAN') || agent.includes('FBAV')) {
+                var url = "https://" + window.location.host + window.location.pathname + window.location.search;
+                window.location.href = "googlechrome://navigate?url=" + encodeURIComponent(url);
+            } else {
+                document.body.innerHTML = 'ID not found!';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Your website content here -->
+</body>
+</html>
