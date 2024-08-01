@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View ID Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        .id-card {
+            width: 300px;
+            border: 1px solid #000;
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .id-card img.logo {
+            width: 90px;
+            height: auto;
+        }
+        .id-card h1 {
+            font-size: 20px;
+            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .id-card h1.curved {
+            display: inline-block;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 0;
+            padding-top: 10px;
+        }
+        .id-card h1.curved::after {
+            content: "";
+            display: block;
+            border-top: 1px solid #000;
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 5px;
+        }
+        .id-card img.photo {
+            width: 100px;
+            height: 120px;
+            border: 1px solid #000;
+            margin: 10px 0;
+        }
+        .id-card .id-label,
+        .id-card .card-label {
+            position: absolute;
+            top: 200px;
+            font-size: 25px;
+            font-weight: bold;
+            color: red;
+        }
+        .id-card .id-label {
+            left: 50px;
+        }
+        .id-card .card-label {
+            right: 30px;
+        }
+        .id-card .details {
+            text-align: left;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .id-card .details span {
+            display: block;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+        .id-card .validity {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #e60000;
+            font-size: 14px;
+        }
+        .id-card .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            color: #000;
+        }
+        .id-card .signature-line {
+            border-top: 1px solid #000;
+            position: absolute;
+            bottom: 35px;
+            right: 20px;
+            max-width: 100px;
+            min-width: 80px;
+            width: fit-content;
+        }
+        .id-card .principal {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="id-card" id="idCard">
+    <img src="" alt="College Logo" class="logo">
+    <h1 class="curved"></h1>
+    <img src="" alt="Student Photo" class="photo">
+    <div class="id-label">ID</div>
+    <div class="card-label">CARD</div>
+    <div class="details">
+        <span>Name: </span>
+        <span>Father: </span>
+        <span>Class: </span>
+        <span>Roll: </span>
+        <span>EIIN: </span>
+        <span>ID NO: </span>
+        <span>Session: </span>
+    </div>
+    <div class="validity"></div>
+    <div class="signature"></div>
+    <div class="signature-line"></div>
+    <div class="principal">Principal</div>
+</div>
+
+<button id="download-btn" onclick="downloadCard()">Download as Image</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const data = JSON.parse(localStorage.getItem('idCardData'));
+
+        document.querySelector('.id-card .logo').src = data.collegeLogo;
+        document.querySelector('.id-card h1.curved').textContent = data.collegeName;
+        document.querySelector('.id-card .photo').src = data.studentPhoto;
+        document.querySelector('.id-card .details span:nth-child(1)').textContent = "Name: " + data.studentName;
+        document.querySelector('.id-card .details span:nth-child(2)').textContent = "Father: " + data.fatherName;
+        document.querySelector('.id-card .details span:nth-child(3)').textContent = "Class: " + data.className;
+        document.querySelector('.id-card .details span:nth-child(4)').textContent = "Roll: " + data.roll;
+        document.querySelector('.id-card .details span:nth-child(5)').textContent = "EIIN: " + data.eiin;
+        document.querySelector('.id-card .details span:nth-child(6)').textContent = "ID NO: " + data.idNo;
+        document.querySelector('.id-card .details span:nth-child(7)').textContent = "Session: " + data.session;
+        document.querySelector('.id-card .validity').textContent = "Valid up to " + data.validity;
+        document.querySelector('.id-card .signature').textContent = data.signature;
+    });
+
+    function downloadCard() {
+        html2canvas(document.getElementById('idCard')).then(canvas => {
+            let link = document.createElement('a');
+            link.download = 'id-card.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    }
+</script>
+
+</body>
+</html>

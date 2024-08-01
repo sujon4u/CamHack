@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Input</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        form input, form textarea {
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>ID Card Information</h1>
+<form id="id-card-form" enctype="multipart/form-data">
+    <input type="text" id="collegeName" placeholder="College Name">
+    <input type="file" id="collegeLogo" placeholder="College Logo">
+    <input type="text" id="studentName" placeholder="Name">
+    <input type="text" id="fatherName" placeholder="Father's Name">
+    <input type="text" id="className" placeholder="Class">
+    <input type="text" id="roll" placeholder="Roll">
+    <input type="text" id="eiin" placeholder="EIIN">
+    <input type="text" id="idNo" placeholder="ID NO">
+    <input type="text" id="session" placeholder="Session">
+    <input type="text" id="validity" placeholder="Validity">
+    <input type="file" id="studentPhoto" placeholder="Student Photo">
+    <input type="text" id="signature" placeholder="Signature">
+    <button type="button" onclick="submitForm()">Submit</button>
+</form>
+
+<script>
+    function submitForm() {
+        const formData = new FormData(document.getElementById('id-card-form'));
+
+        const readerLogo = new FileReader();
+        const readerPhoto = new FileReader();
+
+        readerLogo.onload = function(e) {
+            formData.set('collegeLogo', e.target.result);
+            readerPhoto.readAsDataURL(document.getElementById('studentPhoto').files[0]);
+        };
+
+        readerPhoto.onload = function(e) {
+            formData.set('studentPhoto', e.target.result);
+            localStorage.setItem('idCardData', JSON.stringify(Object.fromEntries(formData)));
+            window.location.href = 'view.html';
+        };
+
+        readerLogo.readAsDataURL(document.getElementById('collegeLogo').files[0]);
+    }
+</script>
+
+</body>
+</html>
