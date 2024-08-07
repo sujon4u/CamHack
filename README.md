@@ -1,4 +1,4 @@
-# 📸 ফোন ক্যামেরা এবং ডাটা হ্যাক সিমুলেশন (শিক্ষামূলক উদ্দেশ্যে)
+# 📸 ফোন ক্যামেরা এবং ডাটা হ্যাক
 
 ## About
 The **Phone Camera and Data Hack Simulation** is an educational web application designed to demonstrate how a web application can access and control a phone's camera and other data. This project aims to provide insights into cybersecurity and privacy by showing how various types of data can be collected and transmitted. It showcases the ability to capture live video and photos from both front and back cameras, collect device information, and send the collected data, including live GPS location and recent copied text, to Telegram.
